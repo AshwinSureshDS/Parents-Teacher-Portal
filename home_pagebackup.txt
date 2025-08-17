@@ -1,0 +1,392 @@
+<!--
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Wonders - Student Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi+Fun:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Reem Kufi Fun', sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: white url('images/side_pic.png') no-repeat center center;
+            background-size: cover;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-container img {
+            width: 600px; /* Adjusted width */
+            height: 96px; /* Adjusted height */
+            margin-right: 10px;
+            margin-left: -30px; /* Slightly align to the left */
+        }
+
+        .logo-text {
+            color: #722F37;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 10px;
+            margin: 5px 0;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: color 0.3s, filter 0.3s; /* Add transition for smooth color change */
+        }
+
+        .menu-item img {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            transition: filter 0.3s; /* Add transition for smooth filter change */
+        }
+
+        .menu-container {
+            background: rgba(255, 255, 255, 1); /* Changed opacity to 1 for complete opacity */
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15), 0 -6px 8px rgba(0, 0, 0, 0.15), 6px 0 8px rgba(0, 0, 0, 0.15), -6px 0 8px rgba(0, 0, 0, 0.15); /* Intensified shadow effect */
+        }
+
+        .menu-item.active {
+            color: black; /* Change text color to black when active */
+        }
+
+        .menu-item.active img {
+            filter: invert(1); /* Change logo color to black when active */
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            background: #f5f5f5;
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .contact-section h2 {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .contact-info {
+            margin-bottom: 30px;
+        }
+
+        .contact-info p {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('(image here)') repeat;
+            opacity: 0.1;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="sidebar">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/home_logo.jpg') }}" alt="Tiny Wonders Logo">
+        </div>
+        <div class="menu-container">
+            <a href="#" class="menu-item">
+                <img src="{{ url_for('static', filename='images/home.jpg') }}" alt="Home Icon">
+                <span>Home</span>
+            </a>
+            <a href="#" class="menu-item">
+                <img src="{{ url_for('static', filename='images/report.jpg') }}" alt="Report Icon">
+                <span>Student Report</span>
+            </a>
+            <a href="#" class="menu-item">
+                <img src="{{ url_for('static', filename='images/calendar.jpg') }}" alt="Calendar Icon">
+                <span>Calendar</span>
+            </a>
+            <a href="#" class="menu-item">
+                <img src="{{ url_for('static', filename='images/chat.jpg') }}" alt="Communications Icon">
+                <span>Communications</span>
+            </a>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="profile-section">
+            <img src="{{ url_for('static', filename='images/profile.jpg') }}" alt="Profile Image" class="profile-image">
+            <h1 class="profile-name">&lt;Profile Name&gt;</h1>
+        </div>
+
+        <div class="contact-info">
+            <h2>CLASS CONTACT</h2>
+            <p>Class:</p>
+            <p>Class Teacher:</p>
+        </div>
+
+        <div class="contact-info">
+            <h2>PARENT CONTACT</h2>
+            <p>Mother's Name:</p>
+            <p>Mother's Mobile No.:</p>
+            <p>Father's Name:</p>
+            <p>Father's Mobile No.:</p>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tiny Wonders - Student Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi+Fun:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Reem Kufi Fun', sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: white url("static/images/side_pic.png") no-repeat center center;
+            background-size: cover;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-container img {
+            width: 600px; /* Adjusted width */
+            height: 96px; /* Adjusted height */
+            margin-right: 10px;
+            margin-left: -30px; /* Slightly align to the left */
+        }
+
+        .logo-text {
+            color: #722F37;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 10px;
+            margin: 5px 0;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: color 0.3s, filter 0.3s; /* Add transition for smooth color change */
+        }
+
+        .menu-item img {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            transition: filter 0.3s; /* Add transition for smooth filter change */
+        }
+
+        .menu-container {
+            background: rgba(255, 255, 255, 1); /* Changed opacity to 1 for complete opacity */
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15), 0 -6px 8px rgba(0, 0, 0, 0.15), 6px 0 8px rgba(0, 0, 0, 0.15), -6px 0 8px rgba(0, 0, 0, 0.15); /* Intensified shadow effect */
+        }
+
+        .menu-item.active {
+            color: black; /* Change text color to black when active */
+        }
+
+        .menu-item.active img {
+            filter: invert(1); /* Change logo color to black when active */
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            background: #f5f5f5;
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .contact-section h2 {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .contact-info {
+            margin-bottom: 30px;
+        }
+
+        .contact-info p {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('(image here)') repeat;
+            opacity: 0.1;
+            z-index: -1;
+        }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="sidebar">
+    <div class="logo-container">
+      <img src="{{ url_for('static', filename='images/home_logo.jpg') }}" alt="Tiny Wonders Logo">
+    </div>
+    <div class="menu-container">
+      <a href="#" class="menu-item">
+        <img src="{{ url_for('static', filename='images/home.jpg') }}" alt="Home Icon">
+        <span>Home</span>
+      </a>
+      <a href="#" class="menu-item">
+        <img src="{{ url_for('static', filename='images/report.jpg') }}" alt="Report Icon">
+        <span>Student Report</span>
+      </a>
+      <a href="#" class="menu-item">
+        <img src="{{ url_for('static', filename='images/calendar.jpg') }}" alt="Calendar Icon">
+        <span>Calendar</span>
+      </a>
+      <a href="#" class="menu-item">
+        <img src="{{ url_for('static', filename='images/chat.jpg') }}" alt="Communications Icon">
+        <span>Communications</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="profile-section">
+        <img src="{{ url_for('static', filename='images/profile.jpg') }}" alt="Profile Image" class="profile-image">
+        <h1 class="profile-name">Welcome, {{ current_user[1] }}</h1> <!-- Assuming roll_no is at index 1 -->
+    </div>
+    
+    <div class="contact-info">
+        <h2>CLASS CONTACT</h2>
+        <p>Class: {{ current_user[5] }}</p> <!-- Assuming class is at index 5 -->
+        <p>Class Teacher: {{ current_user[6] }}</p> <!-- Assuming class_teacher is at index 6 -->
+    </div>
+    
+    <div class="contact-info">
+        <h2>PARENT CONTACT</h2>
+        <p>Mother's Name: {{ current_user[7] }}</p> <!-- Assuming mother's name is at index 7 -->
+        <p>Mother's Mobile No.: {{ current_user[8] }}</p> <!-- Assuming mother's mobile no. is at index 8 -->
+        <p>Father's Name: {{ current_user[9] }}</p> <!-- Assuming father's name is at index 9 -->
+        <p>Father's Mobile No.: {{ current_user[10] }}</p> <!-- Assuming father's mobile no. is at index 10 -->
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuItems = document.querySelectorAll('.menu-item');
+      menuItems.forEach(item => {
+        item.addEventListener('click', function() {
+          menuItems.forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

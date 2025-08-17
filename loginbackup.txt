@@ -1,0 +1,750 @@
+<!--
+#v1 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Wonders - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi+Fun:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, input, button, a, div, label {
+            font-family: 'Reem Kufi Fun', sans-serif !important;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url("static/images/bg_image.jpg"); /* Use a relative path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.75); /* Adjusted opacity */
+            padding: 2rem;
+            border-radius: 80px; /* Made corners more curvy */
+            width: 100%;
+            max-width: 450px; /* Decreased width */
+            height: 585.625px; /* Adjusted height */
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Adjusted to start from top */
+            align-items: center; /* Center align items */
+        }
+
+        .logo {
+            width: 180px; /* Decreased width by one fourth */
+            height: 180px; /* Decreased height by one fourth */
+            margin-bottom: 2rem; /* Adjusted margin */
+            border-radius: 10%; /* Made edges round */
+        }
+
+        input {
+            width: 350px; /* Further adjusted width */
+            height: 55px; /* Increased height a tiny bit */
+            padding: 12px 24px;
+            margin: 8px 0; /* Decreased margin */
+            border: none;
+            border-radius: 38.4px; /* Adjusted border-radius */
+            background: #333333;
+            color: white;
+            font-size: 16px;
+            font-family: 'Reem Kufi Fun', sans-serif !important;
+        }
+
+        input::placeholder {
+            color: #ffffff;
+            font-family: 'Reem Kufi Fun', sans-serif !important;
+        }
+
+        .toggle-container {
+            position: relative;
+            width: 280px; /* Further adjusted width */
+            height: 70px; /* Increased height */
+            margin: 0.5rem auto 1rem auto; /* Adjusted margin to move slightly above */
+            background: #333333;
+            border-radius: 38.4px; /* Adjusted border-radius */
+            overflow: hidden;
+        }
+
+        .toggle-container input[type="checkbox"] {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 140px; /* Exactly half of container width */
+            height: 100%;
+            background: #1a1a1a;
+            border-radius: 38.4px; /* Adjusted border-radius */
+            transition: 0.3s ease-in-out;
+        }
+
+        input[type="checkbox"]:checked + .slider {
+            transform: translateX(140px); /* Exactly half of container width */
+        }
+
+        .toggle-labels {
+            position: relative;
+            display: flex;
+            height: 100%;
+            z-index: 2;
+        }
+
+        .toggle-label {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            user-select: none;
+            font-size: 20px;
+            font-family: 'Reem Kufi Fun', sans-serif !important;
+        }
+
+        .login-btn {
+            width: 350px; /* Further adjusted width */
+            height: 55px; /* Increased height a tiny bit */
+            border: none;
+            border-radius: 38.4px; /* Adjusted border-radius */
+            background: #333333;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin: 0.5rem 0; /* Decreased margin */
+            font-family: 'Reem Kufi Fun', sans-serif !important;
+            font-weight: 400;
+        }
+
+        .forgot-password {
+            color: #333;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            margin: 0.5rem 0; /* Decreased margin */
+            font-family: 'Reem Kufi Fun', sans-serif !important;
+            font-weight: 700;
+        }
+
+        .signup-text {
+            color: #333;
+            font-size: 14px;
+            margin-top: 0.5rem; /* Decreased margin */
+            font-family: 'Reem Kufi Fun', sans-serif !important;
+        }
+
+        .signup-link {
+            color: #722F37;
+            text-decoration: none;
+            font-weight: 700;
+            font-family: 'Reem Kufi Fun', sans-serif !important;
+        }
+
+        .password-container {
+            position: relative;
+            width: 350px; /* Adjusted width to match input */
+        }
+
+        .password-container input {
+            width: 100%; /* Full width of the container */
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .placeholder-dark {
+            color: #cccccc; /* Darker shade for placeholder text */
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Tiny Wonders Logo" class="logo">
+        
+        <div class="toggle-container">
+            <input type="checkbox" id="toggle" />
+            <div class="slider"></div>
+            <div class="toggle-labels">
+                <label for="toggle" class="toggle-label">Parent</label>
+                <label for="toggle" class="toggle-label">Teacher</label>
+            </div>
+        </div>
+        
+        <form>
+            <input type="text" placeholder="Roll No. (Numeric value only)" id="roll-no" class="placeholder-dark" required oninput="this.value = this.value.replace(/[^0-9]/g, '')"> 
+            <div class="password-container">
+                <input type="password" placeholder="Password" id="password" required>
+                <span class="toggle-password" onmousedown="showPassword()" onmouseup="hidePassword()" onmouseleave="hidePassword()">
+                    👁️
+                </span>
+            </div>
+            
+            <button type="submit" class="login-btn">LOGIN</button>
+        </form>
+        
+        <a href="forgot_password.html" class="forgot-password">Forgot Password?</a>
+        <div class="signup-text">
+            Don't have account? <a href="#" class="signup-link" onclick="redirectToSignUp()">Sign-up</a>
+        </div>
+    </div>
+
+    <script>
+        function showPassword() {
+            const passwordField = document.getElementById('password');
+            passwordField.setAttribute('type', 'text');
+        }
+
+        function hidePassword() {
+            const passwordField = document.getElementById('password');
+            passwordField.setAttribute('type', 'password');
+        }
+
+        function redirectToSignUp() {
+            window.location.href = 'sign_up.html';
+        }
+
+        document.getElementById('toggle').addEventListener('change', function() {
+            const userType = this.checked ? 'Teacher' : 'Parent';
+            console.log('Selected user type:', userType);
+            const rollNoField = document.getElementById('roll-no');
+            rollNoField.setAttribute('placeholder', userType === 'Teacher' ? 'Teacher ID' : 'Roll No. (Numeric value only)');
+        });
+    </script>
+</body>
+</html>
+
+#v2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tiny Wonders - Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi+Fun:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, input, button, a, div, label {
+            font-family: 'Reem Kufi Fun', sans-serif !important;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url("static/images/bg_image.jpg"); /* Use a relative path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.75); /* Adjusted opacity */
+            padding: 2rem;
+            border-radius: 80px; /* Made corners more curvy */
+            width: 100%;
+            max-width: 450px; /* Decreased width */
+            height: 585.625px; /* Adjusted height */
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Adjusted to start from top */
+            align-items: center; /* Center align items */
+        }
+
+        .logo {
+            width: 180px; /* Decreased width by one fourth */
+            height: 180px; /* Decreased height by one fourth */
+            margin-bottom: 2rem; /* Adjusted margin */
+            border-radius: 10%; /* Made edges round */
+        }
+
+        input {
+            width: 350px; /* Further adjusted width */
+            height: 55px; /* Increased height a tiny bit */
+            padding: 12px 24px;
+            margin: 8px 0; /* Decreased margin */
+            border: none;
+            border-radius: 38.4px; /* Adjusted border-radius */
+            background: #333333;
+            color: white;
+            font-size: 16px;
+            font-family: 'Reem Kufi Fun', sans-serif !important;
+        }
+
+        input::placeholder {
+            color: #ffffff;
+            font-family: 'Reem Kufi Fun', sans-serif !important;
+        }
+
+        .toggle-container {
+            position: relative;
+            width: 280px; /* Further adjusted width */
+            height: 70px; /* Increased height */
+            margin: 0.5rem auto 1rem auto; /* Adjusted margin to move slightly above */
+            background: #333333;
+            border-radius: 38.4px; /* Adjusted border-radius */
+            overflow: hidden;
+        }
+
+        .toggle-container input[type="checkbox"] {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 140px; /* Exactly half of container width */
+            height: 100%;
+            background: #1a1a1a;
+            border-radius: 38.4px; /* Adjusted border-radius */
+            transition: 0.3s ease-in-out;
+        }
+
+        input[type="checkbox"]:checked + .slider {
+            transform: translateX(140px); /* Exactly half of container width */
+        }
+
+        .toggle-labels {
+            position: relative;
+            display: flex;
+            height: 100%;
+            z-index: 2;
+        }
+
+        .toggle-label {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            user-select: none;
+            font-size: 20px;
+            font-family: 'Reem Kufi Fun', sans-serif !important;
+        }
+
+        .login-btn {
+            width: 350px; /* Further adjusted width */
+            height: 55px; /* Increased height a tiny bit */
+            border: none;
+            border-radius: 38.4px; /* Adjusted border-radius */
+            background: #333333;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin: 0.5rem 0; /* Decreased margin */
+            font-family: 'Reem Kufi Fun', sans-serif !important;
+            font-weight: 400;
+        }
+
+        .forgot-password {
+            color: #333;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            margin: 0.5rem 0; /* Decreased margin */
+            font-family: 'Reem Kufi Fun', sans-serif !important;
+            font-weight: 700;
+        }
+
+        .signup-text {
+            color: #333;
+            font-size: 14px;
+            margin-top: 0.5rem; /* Decreased margin */
+            font-family: 'Reem Kufi Fun', sans-serif !important;
+        }
+
+        .signup-link {
+            color: #722F37;
+            text-decoration: none;
+            font-weight: 700;
+            font-family: 'Reem Kufi Fun', sans-serif !important;
+        }
+
+        .password-container {
+            position: relative;
+            width: 350px; /* Adjusted width to match input */
+        }
+
+        .password-container input {
+            width: 100%; /* Full width of the container */
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .placeholder-dark {
+            color: #cccccc; /* Darker shade for placeholder text */
+        }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Tiny Wonders Logo" class="logo"> 
+
+    <div class="toggle-container">
+      <input type="checkbox" id="toggle" />
+      <div class="slider"></div>
+      <div class="toggle-labels">
+        <label for="toggle" class="toggle-label">Parent</label>
+        <label for="toggle" class="toggle-label">Teacher</label>
+      </div>
+    </div>
+
+    <form method="POST"> 
+      <div class="input-container">
+        <input type="text" placeholder="Roll No. (Numeric value only)" id="roll-no" name="roll_no" required oninput="this.value = this.value.replace(/[^0-9]/g, '')"> 
+      </div>
+      <div class="password-container">
+        <input type="password" placeholder="Password" name="password" required>
+        <span class="toggle-password" onmousedown="showPassword()" onmouseup="hidePassword()" onmouseleave="hidePassword()">
+          👁️
+        </span>
+      </div>
+
+      <button type="submit" class="login-btn">LOGIN</button>
+    </form>
+
+    <a href="forgot_password.html" class="forgot-password">Forgot Password?</a>
+    <div class="signup-text">
+      Don't have an account? <a href="{{ url_for('signup') }}" class="signup-link">Sign-up</a> 
+    </div>
+  </div>
+
+  <script>
+    function showPassword() {
+      const passwordField = document.getElementById('password');
+      passwordField.setAttribute('type', 'text');
+    }
+
+    function hidePassword() {
+      const passwordField = document.getElementById('password');
+      passwordField.setAttribute('type', 'password');
+    }
+
+    document.getElementById('toggle').addEventListener('change', function() {
+      const userType = this.checked ? 'Teacher' : 'Parent';
+      console.log('Selected user type:', userType);
+      const rollNoField = document.getElementById('roll_no');
+      rollNoField.setAttribute('placeholder', userType === 'Teacher' ? 'Teacher ID' : 'Roll No. (Numeric value only)');
+    });
+  </script>
+</body>
+</html>
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tiny Wonders - Login</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Reem+Kufi+Fun:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body,
+      input,
+      button,
+      a,
+      div,
+      label {
+        font-family: "Reem Kufi Fun", sans-serif !important;
+      }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url("static/images/bg_image.jpg"); /* Use a relative path */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      .login-container {
+        background: rgba(255, 255, 255, 0.75); /* Adjusted opacity */
+        padding: 2rem;
+        border-radius: 80px; /* Made corners more curvy */
+        width: 100%;
+        max-width: 450px; /* Decreased width */
+        height: 585.625px; /* Adjusted height */
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start; /* Adjusted to start from top */
+        align-items: center; /* Center align items */
+      }
+
+      .logo {
+        width: 180px; /* Decreased width by one fourth */
+        height: 180px; /* Decreased height by one fourth */
+        margin-bottom: 2rem; /* Adjusted margin */
+        border-radius: 10%; /* Made edges round */
+      }
+
+      input {
+        width: 350px; /* Further adjusted width */
+        height: 55px; /* Increased height a tiny bit */
+        padding: 12px 24px;
+        margin: 8px 0; /* Decreased margin */
+        border: none;
+        border-radius: 38.4px; /* Adjusted border-radius */
+        background: #333333;
+        color: white;
+        font-size: 16px;
+        font-family: "Reem Kufi Fun", sans-serif !important;
+      }
+
+      input::placeholder {
+        color: #ffffff;
+        font-family: "Reem Kufi Fun", sans-serif !important;
+      }
+
+      .toggle-container {
+        position: relative;
+        width: 280px; /* Further adjusted width */
+        height: 70px; /* Increased height */
+        margin: 0.5rem auto 1rem auto; /* Adjusted margin to move slightly above */
+        background: #333333;
+        border-radius: 38.4px; /* Adjusted border-radius */
+        overflow: hidden;
+      }
+
+      .toggle-container input[type="checkbox"] {
+        display: none;
+      }
+
+      .slider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 140px; /* Exactly half of container width */
+        height: 100%;
+        background: #1a1a1a;
+        border-radius: 38.4px; /* Adjusted border-radius */
+        transition: 0.3s ease-in-out;
+      }
+
+      input[type="checkbox"]:checked + .slider {
+        transform: translateX(140px); /* Exactly half of container width */
+      }
+
+      .toggle-labels {
+        position: relative;
+        display: flex;
+        height: 100%;
+        z-index: 2;
+      }
+
+      .toggle-label {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        cursor: pointer;
+        user-select: none;
+        font-size: 20px;
+        font-family: "Reem Kufi Fun", sans-serif !important;
+      }
+
+      .login-btn {
+        width: 350px; /* Further adjusted width */
+        height: 55px; /* Increased height a tiny bit */
+        border: none;
+        border-radius: 38.4px; /* Adjusted border-radius */
+        background: #333333;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        text-transform: uppercase;
+        margin: 0.5rem 0; /* Decreased margin */
+        font-family: "Reem Kufi Fun", sans-serif !important;
+        font-weight: 400;
+      }
+
+      .forgot-password {
+        color: #333;
+        text-decoration: none;
+        font-size: 18px;
+        display: block;
+        margin: 0.5rem 0; /* Decreased margin */
+        font-family: "Reem Kufi Fun", sans-serif !important;
+        font-weight: 700;
+      }
+
+      .signup-text {
+        color: #333;
+        font-size: 14px;
+        margin-top: 0.5rem; /* Decreased margin */
+        font-family: "Reem Kufi Fun", sans-serif !important;
+      }
+
+      .signup-link {
+        color: #722f37;
+        text-decoration: none;
+        font-weight: 700;
+        font-family: "Reem Kufi Fun", sans-serif !important;
+      }
+
+      .password-container {
+        position: relative;
+        width: 350px; /* Adjusted width to match input */
+      }
+
+      .password-container input {
+        width: 100%; /* Full width of the container */
+      }
+
+      .toggle-password {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        cursor: pointer;
+      }
+
+      .placeholder-dark {
+        color: #cccccc; /* Darker shade for placeholder text */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <img
+        src="{{ url_for('static', filename='images/logo.jpg') }}"
+        alt="Tiny Wonders Logo"
+        class="logo"
+      />
+
+      <div class="toggle-container">
+        <input type="checkbox" id="toggle" />
+        <div class="slider"></div>
+        <div class="toggle-labels">
+          <label for="toggle" class="toggle-label">Parent</label>
+          <label for="toggle" class="toggle-label">Teacher</label>
+        </div>
+      </div>
+
+      <form method="POST">
+        <div class="input-container">
+          <input
+            type="text"
+            placeholder="Roll No."
+            id="roll-no"
+            name="roll_no"
+            required
+          />
+        </div>
+        <div class="password-container">
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            id="password"
+            required
+          />
+          <span
+            class="toggle-password"
+            onmousedown="showPassword()"
+            onmouseup="hidePassword()"
+            onmouseleave="hidePassword()"
+          >
+            👁️
+          </span>
+        </div>
+
+        <button type="submit" class="login-btn">LOGIN</button>
+      </form>
+
+      <a href="forgot_password.html" class="forgot-password"
+        >Forgot Password?</a
+      >
+      <div class="signup-text">
+        Don't have an account?
+        <a href="{{ url_for('signup') }}" class="signup-link">Sign-up</a>
+      </div>
+    </div>
+
+    <script>
+      function showPassword() {
+        const passwordField = document.getElementById("password");
+        passwordField.setAttribute("type", "text");
+      }
+
+      function hidePassword() {
+        const passwordField = document.getElementById("password");
+        passwordField.setAttribute("type", "password");
+      }
+
+      document
+        .querySelector(".toggle-password")
+        .addEventListener("mousedown", showPassword);
+      document
+        .querySelector(".toggle-password")
+        .addEventListener("mouseup", hidePassword);
+      document
+        .querySelector(".toggle-password")
+        .addEventListener("mouseleave", hidePassword);
+
+      document.getElementById("toggle").addEventListener("change", function () {
+        const userType = this.checked ? "Teacher" : "Parent";
+        console.log("Selected user type:", userType);
+        const rollNoField = document.getElementById("roll-no");
+        rollNoField.setAttribute(
+          "placeholder",
+          userType === "Teacher" ? "Teacher ID" : "Roll No."
+        );
+      });
+    </script>
+  </body>
+</html>

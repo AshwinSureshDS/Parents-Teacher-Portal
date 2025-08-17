@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tiny Wonders - Student Portal</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Reem+Kufi+Fun:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        height: 100%;
+        overflow: hidden; /* Prevent all scrolling */
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Reem Kufi Fun", Arial, sans-serif;
+        background-color: #e8f7e8;
+        background-image: url("static/images/49661332_9286496.jpg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        height: 100%;
+        overflow: hidden; /* Add this to prevent body scrolling */
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 10px;
+        position: relative;
+        overflow: hidden; /* Change from overflow-x: hidden to overflow: hidden */
+        height: calc(100% - 20px); /* Add height calculation */
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+      }
+
+      .logo img {
+        height: 70px;
+      }
+
+      .nav-bar {
+        background-color: white;
+        border-radius: 25px;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border: 1px solid black;
+        position: relative;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        color: #888;
+        text-decoration: none;
+        padding: 8px 15px;
+        cursor: pointer;
+        transition: color 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
+        position: relative;
+        z-index: 2;
+      }
+
+      .nav-item.active {
+        color: black;
+        font-weight: bold;
+      }
+
+      .nav-item:hover {
+        color: #555;
+      }
+
+      .nav-item img {
+        width: 20px;
+        margin-right: 8px;
+        filter: grayscale(100%);
+        opacity: 0.6;
+        transition: filter 0.3s ease, opacity 0.3s ease;
+      }
+
+      .nav-item.active img {
+        filter: grayscale(0%);
+        opacity: 1;
+        filter: brightness(0);
+      }
+
+      .nav-item:hover img {
+        opacity: 0.8;
+      }
+
+      .slider {
+        position: absolute;
+        bottom: 0;
+        height: 3px;
+        background-color: #000000;
+        transition: all 0.3s ease;
+        z-index: 1;
+      }
+
+      /* Content Sections */
+      .content-section {
+        display: none;
+        animation-duration: 0.5s;
+        animation-fill-mode: both;
+        width: 100%;
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+        overflow: hidden; /* Ensure all sections have hidden overflow */
+        height: calc(100% - 100px); /* Adjust based on header height */
+      }
+
+      .content-section.active {
+        display: block;
+        position: relative;
+        opacity: 1;
+        pointer-events: auto;
+        overflow: hidden;
+      }
+
+      @keyframes slideInFromRight {
+        0% {
+          transform: translateX(100%);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slideInFromLeft {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slideOutToLeft {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      @keyframes slideOutToRight {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      .slide-in-right {
+        animation-name: slideInFromRight;
+      }
+
+      .slide-in-left {
+        animation-name: slideInFromLeft;
+      }
+
+      .slide-out-left {
+        animation-name: slideOutToLeft;
+      }
+
+      .slide-out-right {
+        animation-name: slideOutToRight;
+      }
+
+      /* Home Section Styles */
+      .profile-section {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px; /* Reduced from 30px */
+        margin-bottom: 20px; /* Reduced from 30px */
+      }
+
+      .profile-pic {
+        width: 100px; /* Reduced from 120px */
+        height: 100px; /* Reduced from 120px */
+        background-color: #222;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 20px;
+      }
+
+      .profile-pic img {
+        width: 60px; /* Reduced from 70px */
+      }
+
+      .profile-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .profile-name {
+        font-size: 28px; /* Reduced from 32px */
+        font-weight: bold;
+        margin-bottom: 5px;
+        text-align: left;
+      }
+
+      .student-id {
+        font-size: 18px; /* Reduced from 20px */
+        color: #666;
+        margin-bottom: 0;
+        text-align: left;
+      }
+
+      .contact-section {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        padding-bottom: 20px;
+        overflow: hidden; /* Add this to prevent scrolling */
+      }
+
+      .contact-header {
+        font-weight: bold;
+        border-bottom: 1px solid #333;
+        padding-bottom: 3px; /* Reduced from 5px */
+        margin-bottom: 10px; /* Reduced from 15px */
+        font-size: 16px; /* Reduced from 18px */
+      }
+
+      .contact-info {
+        margin-bottom: 20px; /* Reduced from 30px */
+      }
+
+      .contact-row {
+        display: flex;
+        margin-bottom: 8px; /* Reduced from 10px */
+      }
+
+      .contact-label {
+        font-weight: bold;
+        width: 180px;
+        font-size: 14px; /* Reduced from 16px */
+      }
+
+      .contact-value {
+        flex: 1;
+        font-size: 14px; /* Reduced from 16px */
+      }
+
+      /* Communications Section Styles */
+      .chat-container {
+        display: flex;
+        height: 450px; /* Reduced from 500px */
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: white;
+        margin: 20px auto;
+        max-width: 1100px;
+      }
+
+      .contacts-panel {
+        width: 320px;
+        background-color: #f0f0f0;
+        border-right: 1px solid #ddd;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .contacts-header {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .contacts-header h3 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-bottom: 2px solid #000;
+        padding-bottom: 5px;
+        display: inline-block;
+      }
+
+      .contacts-list {
+        flex: 1;
+        overflow-y: auto;
+      }
+
+      .contact {
+        display: flex;
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+        cursor: pointer;
+        align-items: center;
+      }
+
+      .contact:hover {
+        background-color: #e8e8e8;
+      }
+
+      .contact.active {
+        background-color: #e0e0e0;
+      }
+
+      .contact-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #ccc;
+        margin-right: 15px;
+        flex-shrink: 0;
+      }
+
+      .contact-info {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .contact-name {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .contact-preview {
+        color: #666;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+      }
+
+      .contact-preview::before {
+        content: "";
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234285f4"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>');
+        background-size: contain;
+        margin-right: 5px;
+        flex-shrink: 0;
+      }
+
+      .contact-time {
+        color: #666;
+        font-size: 12px;
+        white-space: nowrap;
+        margin-left: 10px;
+      }
+
+      .chat-panel {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+      }
+
+      .chat-header {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        align-items: center;
+      }
+
+      .chat-header-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #ccc;
+        margin-right: 15px;
+      }
+
+      .chat-header-name {
+        font-weight: bold;
+        font-size: 18px;
+      }
+
+      .chat-messages {
+        flex: 1;
+        padding: 15px;
+        overflow: hidden; /* Changed from auto to hidden */
+        display: flex;
+        flex-direction: column;
+      }
+
+      .chat-message {
+        padding: 10px 15px;
+        border-radius: 15px;
+        margin-bottom: 10px;
+        max-width: 70%; /* Limit message width */
+        word-wrap: break-word;
+      }
+
+      .received-message {
+        background-color: #f0f0f0;
+        align-self: flex-start;
+      }
+
+      .sent-message {
+        background-color: #dcf8c6;
+        align-self: flex-end;
+      }
+
+      .message-content {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.4;
+        max-height: 80px; /* Reduced from 120px */
+        overflow: hidden; /* Changed from auto to hidden */
+      }
+
+      .message-time {
+        font-size: 12px;
+        color: #666;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+      }
+
+      .sent-message .message-time {
+        justify-content: flex-end;
+      }
+
+      .message-status {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234285f4"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>');
+        background-size: contain;
+        margin-left: 5px;
+      }
+
+      .chat-input {
+        padding: 15px;
+        border-top: 1px solid #ddd;
+        display: flex;
+      }
+
+      .chat-input input {
+        flex: 1;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 30px;
+        outline: none;
+      }
+
+      .chat-input button {
+        margin-left: 10px;
+        padding: 10px 20px;
+        background-color: #4285f4;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+      }
+
+      .chat-input button:hover {
+        background-color: #3367d6;
+      }
+
+      /* Time Table Section Styles */
+      .timetable-container {
+        width: 80%;
+        max-width: 800px;
+        margin: 20px auto; /* Reduced from 40px */
+      }
+
+      .timetable {
+        width: 100%;
+        border-collapse: collapse;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        background-color: white;
+        font-size: 0.9em; /* Added to make table more compact */
+      }
+
+      .timetable th,
+      .timetable td {
+        border: 1px solid #ddd;
+        padding: 8px; /* Reduced from 12px */
+        text-align: center;
+      }
+
+      .timetable th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+      }
+
+      .timetable th:first-child {
+        background-color: #6c757d;
+        color: white;
+      }
+
+      .timetable td:first-child {
+        background-color: #6c757d;
+        color: white;
+        font-weight: bold;
+      }
+
+      .timetable tr:first-child th {
+        background-color: #c8d6e5;
+      }
+
+      .timetable td {
+        background-color: #f8d7da;
+      }
+
+      /* Notice Section - Blackboard Styles */
+      .blackboard-container {
+        width: 60%;
+        max-width: 700px;
+        margin: 20px auto; /* Reduced from 30px */
+        background-color: #2a8a3a;
+        border: 20px solid #b06b2c; /* Reduced from 25px */
+        border-radius: 10px;
+        padding: 20px 30px; /* Reduced from 30px 40px */
+        color: white;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        position: relative;
+        height: 380px; /* Reduced from 450px */
+        display: flex;
+        flex-direction: column;
+      }
+
+      .blackboard-title {
+        text-align: center;
+        font-size: 32px; /* Reduced from 36px */
+        margin-bottom: 15px; /* Reduced from 25px */
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: bold;
+      }
+
+      .blackboard-content-wrapper {
+        flex: 1;
+        overflow: hidden; /* Changed from auto to hidden */
+        padding-right: 10px;
+      }
+
+      .blackboard-content {
+        font-size: 16px; /* Reduced from 18px */
+        line-height: 1.5; /* Reduced from 1.6 */
+        text-align: left;
+      }
+
+      /* Remove custom scrollbar styling as we don't need scrollbars anymore */
+      .blackboard-content-wrapper::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Ensure the text looks like the image */
+      .chalk-text {
+        font-family: "Reem Kufi Fun", sans-serif;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Student Report Section */
+      #student-report {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        height: calc(100% - 120px);
+        overflow: hidden;
+      }
+
+      #student-report h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+      }
+
+      #student-report p {
+        font-size: 16px;
+        text-align: center;
+        max-width: 80%;
+      }
+
+      /* Home Section */
+      #home {
+        overflow: hidden !important; /* Keep this */
+        height: auto !important; /* Change this */
+        max-height: calc(100vh - 180px) !important; /* Adjust the value */
+        padding-bottom: 20px;
+        position: relative !important; /* Add this */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="logo">
+          <img src="static/images/Group - Logo.jpg" alt="Tiny Wonders Logo" />
+        </div>
+        <div class="nav-bar">
+          <a
+            href="#home"
+            class="nav-item active"
+            data-index="0"
+            onclick="switchSection(this, 'home')"
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1946/1946436.png"
+              alt="Home"
+            />
+            Home
+          </a>
+          <a
+            href="#student-report"
+            class="nav-item"
+            data-index="1"
+            onclick="switchSection(this, 'student-report')"
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/3135/3135673.png"
+              alt="Student Report"
+            />
+            Student Report
+          </a>
+          <a
+            href="#time-table"
+            class="nav-item"
+            data-index="2"
+            onclick="switchSection(this, 'time-table')"
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/2693/2693570.png"
+              alt="Time Table"
+            />
+            Time Table
+          </a>
+          <a
+            href="#communications"
+            class="nav-item"
+            data-index="3"
+            onclick="switchSection(this, 'communications')"
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1380/1380370.png"
+              alt="Communications"
+            />
+            Communications
+          </a>
+          <a
+            href="#notice"
+            class="nav-item"
+            data-index="4"
+            onclick="switchSection(this, 'notice')"
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1157/1157000.png"
+              alt="Notice"
+            />
+            Notice
+          </a>
+          <div class="slider"></div>
+        </div>
+      </div>
+
+      <!-- Home Section -->
+      <div id="home" class="content-section active">
+        <div class="profile-section">
+          <div class="profile-pic">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png"
+              alt="Profile"
+            />
+          </div>
+          <div class="profile-info">
+            <div class="profile-name">Welcome, {{ current_user[0] }}</div>
+            <div class="student-id">Roll Number: {{ current_user[1] }}</div>
+          </div>
+        </div>
+
+        <div class="contact-section">
+          <div class="contact-info">
+            <div class="contact-header">CLASS CONTACT</div>
+            <div class="contact-row">
+              <div class="contact-label">Class: Lorem Ipsum</div>
+              <div class="contact-value"></div>
+            </div>
+            <div class="contact-row">
+              <div class="contact-label">Class Teacher: Dolor Sit Amet</div>
+              <div class="contact-value"></div>
+            </div>
+          </div>
+
+          <div class="contact-info">
+            <div class="contact-header">PARENT CONTACT</div>
+            <div class="contact-row">
+              <div class="contact-label">
+                Mother's Name: Consectetur Adipiscing
+              </div>
+              <div class="contact-value"></div>
+            </div>
+            <div class="contact-row">
+              <div class="contact-label">Mother's Mobile No: 1234567890</div>
+              <div class="contact-value"></div>
+            </div>
+            <div class="contact-row">
+              <div class="contact-label">Father's Name: Elite Sed</div>
+              <div class="contact-value"></div>
+            </div>
+            <div class="contact-row">
+              <div class="contact-label">Father's Mobile No: 9876543210</div>
+              <div class="contact-value"></div>
+            </div>
+            <div class="contact-row">
+              <div class="contact-label">Parent's Email: abc@gmail.com</div>
+              <div class="contact-value"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Student Report Section -->
+      <div id="student-report" class="content-section">
+        <h2>Student Report Content</h2>
+        <p>This section will contain student reports.</p>
+      </div>
+
+      <!-- Time Table Section -->
+      <div id="time-table" class="content-section">
+        <div class="timetable-container">
+          <table class="timetable">
+            <tr>
+              <th></th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+              <th>Saturday</th>
+            </tr>
+            <tr>
+              <td>9:00 - 9:45</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>9:45 - 10:30</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>10:30 - 11:15</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>11:15 - 12:00</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>12:00 - 12:45</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>12:45 - 1:30</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>1:30 - 2:15</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>2:15 - 3:00</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Communications Section -->
+      <div id="communications" class="content-section">
+        <div class="chat-container">
+          <div class="contacts-panel">
+            <div class="contacts-header">
+              <h3>CONTACTS</h3>
+            </div>
+            <div class="contacts-list">
+              <div class="contact active" onclick="setActiveContact(this)">
+                <div class="contact-avatar"></div>
+                <div class="contact-info">
+                  <div class="contact-name">Teacher1</div>
+                  <div class="contact-preview">
+                    Lorem Ipsum Dolor Sit Amet, C...
+                  </div>
+                </div>
+                <div class="contact-time">08:00 PM</div>
+              </div>
+              <div class="contact" onclick="setActiveContact(this)">
+                <div class="contact-avatar"></div>
+                <div class="contact-info">
+                  <div class="contact-name">Teacher2</div>
+                  <div class="contact-preview">
+                    Lorem Ipsum Dolor Sit Amet, C...
+                  </div>
+                </div>
+                <div class="contact-time">08:00 PM</div>
+              </div>
+              <div class="contact" onclick="setActiveContact(this)">
+                <div class="contact-avatar"></div>
+                <div class="contact-info">
+                  <div class="contact-name">Teacher3</div>
+                  <div class="contact-preview">
+                    Lorem Ipsum Dolor Sit Amet, C...
+                  </div>
+                </div>
+                <div class="contact-time">08:00 PM</div>
+              </div>
+              <div class="contact" onclick="setActiveContact(this)">
+                <div class="contact-avatar"></div>
+                <div class="contact-info">
+                  <div class="contact-name">Teacher4</div>
+                  <div class="contact-preview">
+                    Lorem Ipsum Dolor Sit Amet, C...
+                  </div>
+                </div>
+                <div class="contact-time">08:00 PM</div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-panel">
+            <div class="chat-header">
+              <div class="chat-header-avatar"></div>
+              <div class="chat-header-name">Teacher1</div>
+            </div>
+            <div class="chat-messages">
+              <!-- Messages will be added dynamically -->
+            </div>
+            <div class="chat-input">
+              <input
+                type="text"
+                placeholder="Type a message..."
+                id="messageInput"
+                onkeypress="handleKeyPress(event)"
+              />
+              <button onclick="sendMessage()">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notice Section -->
+      <div id="notice" class="content-section">
+        <div class="blackboard-container">
+          <div class="blackboard-title chalk-text">NOTICE</div>
+          <div class="blackboard-content-wrapper">
+            <div class="blackboard-content chalk-text">
+              Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do
+              Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua. Ut
+              Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris
+              Nisi Ut Aliquip Ex Ea Commodo Consequat. Duis Aute Irure Dolor In
+              Reprehenderit In Voluptate Velit Esse Cillum Dolore Eu Fugiat
+              Nulla Pariatur. Excepteur Sint Occaecat Cupidatat Non Proident,
+              Sunt In Culpa Qui Officia Deserunt Mollit Anim Id Est Laborum.
+              <br /><br />
+              Additional information can be added here. The blackboard will show
+              a custom scrollbar when the content exceeds the available space.
+              This allows for more content without changing the size of the
+              blackboard itself.
+              <br /><br />
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+              accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+              quae ab illo inventore veritatis et quasi architecto beatae vitae
+              dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
+              aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
+              eos qui ratione voluptatem sequi nesciunt.
+              <br /><br />
+              Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
+              consectetur, adipisci velit, sed quia non numquam eius modi
+              tempora incidunt ut labore et dolore magnam aliquam quaerat
+              voluptatem.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Initialize the slider position on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        const activeItem = document.querySelector(".nav-item.active");
+        if (activeItem) {
+          positionSlider(activeItem);
+        }
+
+        // Check if there's a hash in the URL and switch to that section
+        const hash = window.location.hash.substring(1);
+        if (hash) {
+          const navItem = document.querySelector(`a[href="#${hash}"]`);
+          if (navItem) {
+            switchSection(navItem, hash);
+          }
+        }
+      });
+
+      function positionSlider(element) {
+        const slider = document.querySelector(".slider");
+
+        // Set the width and position of the slider to match the active element
+        slider.style.width = element.offsetWidth + "px";
+        slider.style.left = element.offsetLeft + "px";
+      }
+
+      function switchSection(element, sectionId) {
+        // Get current and target indices
+        const currentIndex = parseInt(
+          document.querySelector(".nav-item.active").dataset.index
+        );
+        const targetIndex = parseInt(element.dataset.index);
+
+        // Determine direction of transition
+        const direction = targetIndex > currentIndex ? "right" : "left";
+
+        // Get current active section
+        const currentSection = document.querySelector(
+          ".content-section.active"
+        );
+        const targetSection = document.getElementById(sectionId);
+
+        if (!targetSection || currentSection === targetSection) return;
+
+        // Prevent scrolling during transition
+        document.body.style.overflow = "hidden";
+
+        // Set active state for navigation
+        const navItems = document.querySelectorAll(".nav-item");
+        navItems.forEach((item) => {
+          item.classList.remove("active");
+        });
+        element.classList.add("active");
+        positionSlider(element);
+
+        // Update URL hash without scrolling
+        history.pushState(null, null, `#${sectionId}`);
+
+        // Hide all sections first
+        document.querySelectorAll(".content-section").forEach((section) => {
+          if (section !== currentSection) {
+            section.classList.remove("active");
+            section.style.display = "none";
+          }
+          section.classList.remove(
+            "slide-out-left",
+            "slide-out-right",
+            "slide-in-left",
+            "slide-in-right"
+          );
+        });
+
+        // Apply animations
+        currentSection.style.display = "block"; // Temporarily show for animation
+        currentSection.classList.add(
+          direction === "right" ? "slide-out-left" : "slide-out-right"
+        );
+        currentSection.style.animationDuration = "0.3s";
+
+        // After current section starts sliding out
+        setTimeout(() => {
+          // Hide current section completely
+          currentSection.style.display = "none";
+          currentSection.classList.remove("active");
+          currentSection.classList.remove("slide-out-left", "slide-out-right");
+
+          // Show and animate target section
+          targetSection.classList.add("active");
+          targetSection.style.display = "block";
+          targetSection.classList.add(
+            direction === "right" ? "slide-in-right" : "slide-in-left"
+          );
+          targetSection.style.animationDuration = "0.3s";
+
+          // Remove animation class after it completes
+          setTimeout(() => {
+            targetSection.classList.remove("slide-in-right", "slide-in-left");
+            // Re-enable scrolling after animation completes
+            document.body.style.overflow = "";
+          }, 300);
+        }, 300);
+      }
+
+      // Chat functionality
+      function setActiveContact(contactElement) {
+        // Remove active class from all contacts
+        document.querySelectorAll(".contact").forEach((contact) => {
+          contact.classList.remove("active");
+        });
+
+        // Add active class to clicked contact
+        contactElement.classList.add("active");
+
+        // Update chat header with contact name and avatar
+        const contactName =
+          contactElement.querySelector(".contact-name").textContent;
+        document.querySelector(".chat-header-name").textContent = contactName;
+
+        // Clear current messages
+        const chatMessages = document.querySelector(".chat-messages");
+        chatMessages.innerHTML = "";
+
+        // Add appropriate messages based on selected contact
+        if (contactName === "Teacher1") {
+          // First message - received
+          addMessage(
+            "received",
+            "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua. Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo Consequat. Duis Aute Irure Dolor In Reprehenderit In Voluptate Velit Esse Cillum Dolore Eu Fugiat Nulla Pariatur. Excepteur Sint Occaecat Cupidatat Non Proident, Sunt In Culpa Qui Officia Deserunt Mollit Anim Id Est Laborum.",
+            "08:00 PM"
+          );
+
+          // Short sent message with checkmark
+          addMessage(
+            "sent",
+            "Lorem Ipsum Dolor Sit Amet, C...",
+            "08:00 PM",
+            true
+          );
+
+          // Second received message
+          addMessage(
+            "received",
+            "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua. Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris Nisi.",
+            "08:00 PM"
+          );
+
+          // Second sent message with checkmark
+          addMessage(
+            "sent",
+            "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua. Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris Nisi.",
+            "08:00 PM",
+            true
+          );
+        } else if (contactName === "Teacher2") {
+          addMessage(
+            "received",
+            "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.",
+            "08:00 PM"
+          );
+          addMessage(
+            "sent",
+            "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.",
+            "08:00 PM",
+            true
+          );
+        } else if (contactName === "Teacher3") {
+          addMessage(
+            "received",
+            "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.",
+            "08:00 PM"
+          );
+          addMessage(
+            "sent",
+            "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.",
+            "08:00 PM",
+            true
+          );
+        } else if (contactName === "Teacher4") {
+          addMessage(
+            "received",
+            "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.",
+            "08:00 PM"
+          );
+          addMessage(
+            "sent",
+            "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.",
+            "08:00 PM",
+            true
+          );
+        }
+      }
+
+      function addMessage(type, text, time, hasCheckmark = false) {
+        const chatMessages = document.querySelector(".chat-messages");
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `chat-message ${type}-message`;
+
+        let messageHTML = `
+                <p class="message-content">${text}</p>
+                <div class="message-time">
+                    ${time}
+                    ${
+                      hasCheckmark ? '<span class="message-status"></span>' : ""
+                    }
+                </div>
+            `;
+
+        messageDiv.innerHTML = messageHTML;
+        chatMessages.appendChild(messageDiv);
+
+        // Scroll to the bottom of the chat
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      function sendMessage() {
+        const messageInput = document.getElementById("messageInput");
+        const messageText = messageInput.value.trim();
+
+        if (messageText) {
+          // Add the sent message to the chat
+          addMessage("sent", messageText, getCurrentTime(), true);
+
+          // Clear the input field
+          messageInput.value = "";
+
+          // Simulate a reply after a short delay
+          setTimeout(() => {
+            const activeContact = document.querySelector(
+              ".contact.active .contact-name"
+            ).textContent;
+            addMessage(
+              "received",
+              `This is a response from ${activeContact}.`,
+              getCurrentTime()
+            );
+          }, 1000);
+        }
+      }
+
+      function handleKeyPress(event) {
+        if (event.key === "Enter") {
+          sendMessage();
+        }
+      }
+
+      function getCurrentTime() {
+        const now = new Date();
+        let hours = now.getHours();
+        const minutes = now.getMinutes().toString().padStart(2, "0");
+        const ampm = hours >= 12 ? "PM" : "AM";
+
+        hours = hours % 12;
+        hours = hours ? hours : 12; // Convert 0 to 12
+
+        return `${hours}:${minutes} ${ampm}`;
+      }
+
+      // Initialize the first contact as active when the page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        // Set the first contact as active
+        const firstContact = document.querySelector(".contacts-list .contact");
+        if (firstContact) {
+          setActiveContact(firstContact);
+        }
+
+        // Initialize section based on URL hash
+        const hash = window.location.hash.substring(1);
+        if (hash) {
+          const section = document.getElementById(hash);
+          if (section) {
+            const navItem = document.querySelector(
+              `.nav-item[data-section="${hash}"]`
+            );
+            if (navItem) {
+              switchSection(navItem, hash);
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
